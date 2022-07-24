@@ -1,4 +1,4 @@
-const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
+// const { readFromFile, readAndAppend } = import('../helpers/fsUtils');
 
 let noteTitle;
 let noteText;
@@ -20,7 +20,8 @@ const hide = (elem) => {
 let activeNote = {};
 
 const getNotes = async () => {
-  return readFromFile('./db/db.json').then((data) => JSON.parse(data));
+  return [{ test: 'attempt test'}];
+  // return readFromFile('./db/db.json').then((data) => JSON.parse(data));
 };
   // fetch('/api/notes', {
   //   method: 'GET',
@@ -153,17 +154,17 @@ const renderNoteList = async (notes) => {
 
   if (jsonNotes.length === 0) {
     noteListItems.push(createLi('No saved Notes', false));
-  }
-
-  jsonNotes.forEach((note) => {
-    const li = createLi(note.title);
-    li.dataset.note = JSON.stringify(note);
-
-    noteListItems.push(li);
-  });
-
-  if (window.location.pathname === '/notes') {
-    noteListItems.forEach((note) => noteList[0].append(note));
+  } else {
+    jsonNotes.forEach((note) => {
+      const li = createLi(note.title);
+      li.dataset.note = JSON.stringify(note);
+  
+      noteListItems.push(li);
+    });
+  
+    if (window.location.pathname === '/notes') {
+      noteListItems.forEach((note) => noteList[0].append(note));
+    }
   }
 };
 

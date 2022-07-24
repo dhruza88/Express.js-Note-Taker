@@ -22,9 +22,7 @@ app.get("/", (req,res) => {
 
 app.get("/api/notes", (req,res) => {
     try {
-        console.log(' GETTING NOTES TO LOAD ');
-        res.sendFile(path.join(__dirname, '/public/notes.html'))
-        console.log(' AFTER NOTES RES SEND');
+        res.sendFile(path.join(__dirname, '/public/notes.html'));
     } catch (err) {
         console.log('error sending (notes) file');
         console.log(err);
