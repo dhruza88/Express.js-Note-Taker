@@ -48,6 +48,31 @@ app.get("/api/notes/db", (req, res) => {
         console.log(err);
     }
 });
+app.post("/api/notes/db", (req, res) => {
+    try {
+        const dirName = `${__dirname}/db/db.json`
+        fs.readFile(dirName, 'utf8',
+            (err, data) => {
+                if (err) {
+                    console.error(err);
+                } else {
+                    let newNote = req.body;
+                    const parsedSavedNotes = JSON.parse(data)
+                    newNote.id =
+                        parsedSavedNotes.length > 0 ?
+                        Number(parsedSavedNotes[parsedSavedNotes.length - 1].id + 1) :
+                        1;
+
+                    console.log('Received Request');
+                    console.log(newNote);
+                    console.log('existing notes');
+                    console.log(data);
+                }
+            });
+    } catch (err) {
+        console.log('FAILED to Save New Note');
+    }
+});
 
 app.listen(PORT, () => {
     console.log(__dirname);

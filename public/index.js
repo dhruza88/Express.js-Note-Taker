@@ -13,6 +13,8 @@ let newNoteBtn;
 // list-group
 let noteList;
 
+let noteListItem;
+
 
 
 
@@ -37,7 +39,7 @@ const getNotes = async () => {
 };
 
 const saveNote = (note) =>
-  fetch('/api/notes', {
+  fetch('/api/notes/db', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -74,26 +76,28 @@ const handleNoteSave = () => {
     title: noteTitle.value,
     text: noteText.value,
   };
+  console.log('new note');
+  console.log(newNote);
   saveNote(newNote).then(() => {
-    getAndRenderNotes();
+    handleLoad();
     renderActiveNote();
   });
 };
 
 // Delete the clicked note
-const handleNoteDelete = (e) => {
+const handleNoteDelete = async (e) => {
   // Prevents the click listener for the list from being called when the button inside of it is clicked
   e.stopPropagation();
 
-  const note = e.target;
-  const noteId = JSON.parse(note.parentElement.getAttribute('data-note')).id;
+  const noteData = await getSelectedNoteData(e);
+  const noteId = noteData.id;
 
   if (activeNote.id === noteId) {
     activeNote = {};
   }
 
   deleteNote(noteId).then(() => {
-    getAndRenderNotes();
+    handleLoad();
     renderActiveNote();
   });
 };
@@ -176,6 +180,12 @@ const renderNoteList = async (notes) => {
   }
 };
 
+const getSelectedNoteData = async (e) => {
+  return JSON.parse(e.target.parentElement.getAttribute('data-note'));
+}
+
+
+
 const handleListeners = async () => {
   if (window.location.pathname === '/api/notes') {
     try {
@@ -204,6 +214,7 @@ const handleLoad = async () => {
   const savedNotes = await getNotes();
   await handleListeners();
   await renderNoteList(savedNotes);
+  
 }
 
 handleLoad();
