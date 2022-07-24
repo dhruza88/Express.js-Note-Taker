@@ -1,16 +1,10 @@
+const { readFromFile, readAndAppend } = require('../helpers/fsUtils');
+
 let noteTitle;
 let noteText;
 let saveNoteBtn;
 let newNoteBtn;
 let noteList;
-
-if (window.location.pathname === '/notes') {
-  noteTitle = document.querySelector('.note-title');
-  noteText = document.querySelector('.note-textarea');
-  saveNoteBtn = document.querySelector('.save-note');
-  newNoteBtn = document.querySelector('.new-note');
-  noteList = document.querySelectorAll('.list-container .list-group');
-}
 
 // Show an element
 const show = (elem) => {
@@ -25,13 +19,15 @@ const hide = (elem) => {
 // activeNote is used to keep track of the note in the textarea
 let activeNote = {};
 
-const getNotes = () =>
-  fetch('/api/notes', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
+const getNotes = async () => {
+  return readFromFile('./db/db.json').then((data) => JSON.parse(data));
+};
+  // fetch('/api/notes', {
+  //   method: 'GET',
+  //   headers: {
+  //     'Content-Type': 'application/json',
+  //   },
+  // });
 
 const saveNote = (note) =>
   fetch('/api/notes', {
@@ -118,7 +114,8 @@ const handleRenderSaveBtn = () => {
 
 // Render the list of note titles
 const renderNoteList = async (notes) => {
-  let jsonNotes = await notes.json();
+  // let jsonNotes = await notes.json();
+  let jsonNotes = notes;
   if (window.location.pathname === '/notes') {
     noteList.forEach((el) => (el.innerHTML = ''));
   }
@@ -171,13 +168,44 @@ const renderNoteList = async (notes) => {
 };
 
 // Gets notes from the db and renders them to the sidebar
-const getAndRenderNotes = () => getNotes().then(renderNoteList);
+// const getAndRenderNotes = () => getNotes().then(renderNoteList);
 
-if (window.location.pathname === '/notes') {
-  saveNoteBtn.addEventListener('click', handleNoteSave);
-  newNoteBtn.addEventListener('click', handleNewNoteView);
-  noteTitle.addEventListener('keyup', handleRenderSaveBtn);
-  noteText.addEventListener('keyup', handleRenderSaveBtn);
+
+const handleListeners = () => {
+  if (window.location.pathname === '/notes') {
+    try {
+      noteTitle = document.querySelector('.note-title');
+      noteTitle.addEventListener('keyup', handleRenderSaveBtn);
+  
+      noteText = document.querySelector('.note-textarea');
+      noteText.addEventListener('keyup', handleRenderSaveBtn);
+  
+      saveNoteBtn = document.querySelector('.save-note');
+      saveNoteBtn.addEventListener('click', handleNoteSave);
+  
+      newNoteBtn = document.querySelector('.new-note');
+      newNoteBtn.addEventListener('click', handleNewNoteView);
+  
+      noteList = document.querySelectorAll('.list-container .list-group');
+    } catch (err) {
+      console.log('error during handle listeners');
+      console.log(err);
+    }
+  }
+  
 }
 
-getAndRenderNotes();
+const handleLoad = async () => {
+  console.log('Notes HTML called');
+  console.log(' handle load running ');
+  // const readData = readFromFile('./db/db.json').then((data) => res.json(JSON.parse(data)));
+  // console.log('file data from db.json');
+  // console.log(readData);
+
+  const savedNotes = await getNotes();
+  console.log(savedNotes);
+  await renderNoteList(savedNotes);
+  handleListeners()  
+}
+
+handleLoad();
