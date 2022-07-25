@@ -44,3 +44,15 @@ enter in your own task and try to remove or delete
 [https://www.github.com/dhruza88](https://www.github.com/dhruza88) <br />
 davidhruza@gmail.com
 
+ScreenShot:
+
+<img width="1282" alt="ss-1" src="C:\Users\david\code\challenges\Express.js-Note-Taker\assets\ss-1.jpg"
+
+
+<img width="1283" alt="ss-2" src="C:\Users\david\code\challenges\Express.js-Note-Taker\assets\ss-2.jpg"
+
+
+Deployed Link:
+
+https://dh-expressjs-note.herokuapp.com/
+
