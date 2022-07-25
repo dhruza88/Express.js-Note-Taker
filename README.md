@@ -46,10 +46,12 @@ davidhruza@gmail.com
 
 ScreenShot:
 
-<img width="1282" alt="ss-1" src="C:\Users\david\code\challenges\Express.js-Note-Taker\assets\ss-1.jpg"
+![ss-1](https://user-images.githubusercontent.com/106774335/180672989-8f278e58-1531-44a6-9cd8-6680e07fcc97.jpg)
 
 
-<img width="1283" alt="ss-2" src="C:\Users\david\code\challenges\Express.js-Note-Taker\assets\ss-2.jpg"
+![ss-2](https://user-images.githubusercontent.com/106774335/180672994-b9790500-35de-4309-bc19-e5ab17cce4b8.jpg)
+
+
 
 
 Deployed Link:
