@@ -19,7 +19,8 @@ Using Express.JS the user is able to enter in a task and store through back end 
 
 
 ## Installation
-npm i express, npm i fs
+npm i express
+npm i fs
 
 ## Usage
 While visiting the horuku server the user is instructed to enter a task title, along with a description and press the add button to add to the array of tasks to be completed. Upon completion of the task the user can choose to remove by hitting the delete button.
